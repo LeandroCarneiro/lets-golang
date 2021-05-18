@@ -1,3 +1,3 @@
-module lets-golang/GoConvert
+module GoConvert
 
 go 1.16
