@@ -1,11 +1,11 @@
 package main
 
 import (
-	domain "GoConvert/Domain"
+	di "GoConvert/Infra/DI"
+	serv "GoConvert/Service"
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -18,14 +18,15 @@ func handleRequests() {
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
 
+func init() {
+	di.Register()
+}
+
 func main() {
 	fmt.Println("test")
-	a := domain.NewRate(1, "EUR", "BRL", 6.40, time.Now())
-	b := domain.LogExecution{
-		Id:   1,
-		Time: time.Now(),
-	}
-	fmt.Println("Time: " + b.Time.String())
-	fmt.Println("Currency: " + a.CurrencyFrom)
+	result := serv.Find(1)
+
+	fmt.Println("Time: " + result.Date.String())
+	fmt.Println("Currency: " + result.CurrencyFrom)
 	handleRequests()
 }
